@@ -1,7 +1,7 @@
 {
   "name": "infografik",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "author": "Jakob-em <26389546+Jakob-em@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
@@ -10,7 +10,8 @@
   },
   "devDependencies": {
     "parcel-bundler": "1.12.4",
-    "sass": "1.29.0"
+    "sass": "1.29.0",
+    "typescript": "^4.0.5"
   },
   "dependencies": {
     "d3": "^6.2.0"
