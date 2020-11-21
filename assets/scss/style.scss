@@ -1,0 +1,66 @@
+
+// Color
+$background: #F9DC5C;
+$primary: #3185FC;
+$secondary: #E84855;
+$text: #303036;
+
+// Fonts
+@font-face {
+  font-family: 'Raleway';
+  src: url('../fonts/Raleway-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto Slab';
+  src: url('../fonts/RobotoSlab-Medium.ttf') format('truetype');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Raleway', sans-serif;
+  color: $text;
+}
+
+body {
+  background: $background;
+}
+
+.serif {
+  font-family: 'Roboto Slab', serif;
+}
+
+#wrapper {
+  padding: 3em 2em 0 2em;
+  display: inline-block;
+}
+
+.heading {
+  margin-left: 50px;
+}
+
+
+//History Chart
+
+#history-chart {
+  margin-top: 10em;
+}
+
+.history-point {
+  fill: $primary;
+  transition: 200ms ease;
+  stroke-width: 28px;
+  stroke: transparent;
+}
+
+
+.history-point:hover {
+  fill: $secondary;
+
+}
+
+.history-line {
+  stroke: $primary;
+}
