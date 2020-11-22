@@ -1,4 +1,3 @@
-
 // Color
 $background: #F9DC5C;
 $primary: #3185FC;
@@ -41,11 +40,33 @@ body {
   margin-left: 50px;
 }
 
+.button-group {
+  margin: 2em 0;
+  button {
+    background: none;
+    padding: 1em;
+    border: solid 1px $text;
+    border-radius: 1em;
+    cursor: pointer;
+    margin-right: 1em;
+    transition: 100ms ease;
+    font-size: 1em;
+  }
+}
+
 
 //History Chart
 
 #history-chart {
-  margin-top: 10em;
+  margin-top: 1em;
+}
+
+.axis {
+  font-size: 1em;
+}
+
+.grid-lines {
+  stroke-dasharray: 5;
 }
 
 .history-point {
@@ -53,12 +74,11 @@ body {
   transition: 200ms ease;
   stroke-width: 28px;
   stroke: transparent;
-}
+  cursor: pointer;
 
-
-.history-point:hover {
-  fill: $secondary;
-
+  &:hover {
+    fill: $secondary;
+  }
 }
 
 .history-line {

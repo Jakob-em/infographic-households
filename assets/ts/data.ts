@@ -1,4 +1,4 @@
-interface HistoricalPoint {
+export interface HistoricalPoint {
   year: number
   averageHouseholdSize: number,
   singleHouseholdPercentage: number
