@@ -4,7 +4,7 @@ import { historicalData, HistoricalPoint } from './data';
 let margins = {top: 10, right: 10, bottom: 50, left: 50};
 let historyDimensions = {
   width: 1920 - margins.left - margins.right,
-  height: 500 - margins.top - margins.bottom
+  height: 700 - margins.top - margins.bottom
 }
 
 
@@ -23,18 +23,26 @@ const x = d3.scaleLinear()
 
 
 function prepareSingleHousehold() {
-  y.domain([0.5, 0]).range([0, historyDimensions.height]);
+  toggleHistoryButtons(true);
+
+  y.domain([0.6, 0]).range([0, historyDimensions.height]);
   yAxis.tickFormat(d3.format('.0%'))
   historyChart.select('.axis.y').transition().call(yAxis)
 
   redrawPoints(d => d.singleHouseholdPercentage)
 }
 
+function toggleHistoryButtons(isSingleHousehold: boolean) {
+  d3.select('#average-size-button').classed('active', !isSingleHousehold)
+  d3.select('#single-household-button').classed('active', isSingleHousehold)
+}
+
 function prepareAverageHouseholdSize() {
-  y.domain([4, 0]).range([0, historyDimensions.height]);
+  toggleHistoryButtons(false);
+
+  y.domain([5, 0]).range([0, historyDimensions.height]);
   yAxis.tickFormat(d3.format('.111'))
   historyChart.select('.axis.y').transition().call(yAxis)
-
 
   redrawPoints(d => d.averageHouseholdSize)
 }
@@ -72,14 +80,14 @@ function redrawPoints(dataFn: (d: HistoricalPoint) => number) {
 }
 
 
-let historyChart = d3.select('#wrapper')
+let historyChart = d3.select('#history-chart')
     .append('svg')
     .attr('id', 'history-chart')
-    .attr('height', historyDimensions.height + margins.top + margins.bottom)
-    .attr('width', historyDimensions.width + margins.right + margins.left)
+    .attr("preserveAspectRatio", 'xMinYMin meet')
+    .attr("viewBox", `0 0 ${historyDimensions.width + margins.right + margins.left} ${historyDimensions.height + margins.top + margins.bottom}`)
     .append("g")
     .attr("transform",
-        "translate(" + margins.left + "," + margins.top + ")");
+        "translate(" + margins.left + "," + margins.top + ")")
 
 function drawHistory() {
 
