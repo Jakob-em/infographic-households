@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
+<head>
     <link rel="stylesheet" href="assets/scss/style.scss">
     <title>Die Entwicklung des Wohnungsmarkts in Bayern</title>
-  </head>
+</head>
 <body>
 <div class="wrapper">
-  <div class="heading">
-    <h1 class="serif">Die Entwicklung des Wohnungsmarkts in Bayern</h1>
-    <div class="button-group">
-      <button id="single-household-button">Anteil der Einpersonenhaushalte</button>
-      <button id="average-size-button">Durchschnittliche Haushaltsgröße</button>
+    <div class="heading">
+        <h1 class="serif">Die Entwicklung des Wohnungsmarkts in Bayern</h1>
+        <div class="button-group">
+            <button id="single-household-button">Anteil der Einpersonenhaushalte</button>
+            <button id="average-size-button">Durchschnittliche Haushaltsgröße</button>
+            <div class="navigation">
+                <button id="scroll-back-button">Zurück</button>
+                <button id="scroll-forward-button">Weiter</button>
+            </div>
+        </div>
+        <div></div>
     </div>
-    <div></div>
-  </div>
-  <div class="vertical-scroll">
-    <div id="history-chart"></div>
-  </div>
+    <div class="vertical-scroll">
+        <div id="history-chart"></div>
+        <div id="detail-chart">
+            <h2 class="detail-heading">Verteilung der Einpersonenhaushalte 2019</h2>
+        </div>
+    </div>
 </div>
 <script src="assets/ts/index.ts"></script>
 <script src="assets/ts/scrolling.ts"></script>

@@ -47,28 +47,49 @@ body {
 }
 
 .heading {
-  margin-left: 40px;
+  $heading-margin-left: 40px;
+  margin-left: $heading-margin-left;
   position: fixed;
+  width: calc(100vw - 2 * #{$vertical-padding} - #{$heading-margin-left});
 }
 
 .vertical-scroll {
-  margin-top: 150px;
+  margin-top: 170px;
+  display: flex;
   flex-grow: 1;
-  width: 120vw;
+  width: 150vw;
+
   #history-chart {
-    width: calc(100vw - 2 * #{$vertical-padding});
+    width: calc(100vw - 2 * #{$vertical-padding} + 150px);
     min-width: 1400px;
+
     svg {
       display: inline-block;
       width: 100%;
       height: 100%;
     }
   }
+
+  #detail-chart {
+    margin-top: 10px;
+
+    .detail-heading {
+      margin-left: .5em
+    }
+  }
 }
 
 .button-group {
   margin: 2em 0;
+  display: flex;
+
+  .navigation {
+    margin-left: auto;
+    margin-right: 135px;
+  }
+
   button {
+    outline: none;
     background: none;
     color: $primary;
     padding: 1em;
@@ -80,12 +101,14 @@ body {
     font-size: 1em;
     font-weight: bold;
 
+
     &.active {
       color: $text-light;
       background: $primary;
       border: solid 1px $primary;
 
     }
+
     &:hover {
       color: $text-light;
       background: $primary-darker;
@@ -123,4 +146,12 @@ body {
 
 .history-line {
   stroke: $primary;
+  stroke-width: 2;
+}
+
+.connection-line {
+  stroke: $primary;
+  fill: none;
+  stroke-width: 2;
+  stroke-dasharray: 1em;
 }
