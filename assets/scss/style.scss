@@ -42,8 +42,6 @@ body {
 
 .wrapper {
   padding: 3em $vertical-padding 0 $vertical-padding;
-  display: flex;
-  flex-direction: column;
 }
 
 .heading {
@@ -56,8 +54,6 @@ body {
 .vertical-scroll {
   margin-top: 170px;
   display: flex;
-  flex-grow: 1;
-  width: 150vw;
 
   #history-chart {
     width: calc(100vw - 2 * #{$vertical-padding} + 150px);
@@ -70,11 +66,24 @@ body {
     }
   }
 
-  #detail-chart {
+  #detail-chart-wrapper {
+    min-width: calc(100vw - 2 * #{$vertical-padding});
     margin-top: 10px;
+    max-height: calc(100vh - 170px - 3em - 150px);
+    display: flex;
+    flex-direction: column;
 
     .detail-heading {
       margin-left: .5em
+    }
+
+    .detail-chart-svg-wrapper {
+      height: 100%;
+
+      svg {
+        display: inline-block;
+        height: 100%;
+      }
     }
   }
 }
@@ -125,7 +134,7 @@ body {
 }
 
 .axis {
-  font-size: 1em;
+  font-size: 1.3em;
 }
 
 .grid-lines {

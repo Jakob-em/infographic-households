@@ -14,5 +14,5 @@ function scrollFunction(offset: number) {
     };
 }
 
-document.getElementById('scroll-forward-button').onclick = scrollFunction(1000)
-document.getElementById('scroll-back-button').onclick = scrollFunction(-1000)
+document.getElementById('scroll-forward-button').onclick = scrollFunction(window.innerWidth)
+document.getElementById('scroll-back-button').onclick = scrollFunction(-window.innerWidth)

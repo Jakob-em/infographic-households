@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 import {historicalData, HistoricalPoint} from './data';
 
-let margins = {top: 10, right: 250, bottom: 50, left: 50};
+let margins = {top: 10, right: 250, bottom: 50, left: 60};
 let historyDimensions = {
     width: 1920 - margins.left - margins.right,
     height: 700 - margins.top - margins.bottom
