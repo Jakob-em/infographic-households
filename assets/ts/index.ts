@@ -81,15 +81,19 @@ function redrawPoints(dataFn: (d: HistoricalPoint) => number) {
 
     const connectionPath = buildConnectionPath(position);
 
+    let isLineVisible = !!historyChart.select(".history-line").attr('d')
+
+    let delay = isLineVisible ? 0 : 500;
+
     historyChart.selectAll(".connection-line")
         .transition()
         .attr("d", connectionPath)
-
-    let isLineVisible = !!historyChart.select(".history-line").attr('d')
+        .delay(delay)
+        .style("opacity", "1")
 
     historyChart.select(".history-line")
         .transition()
-        .delay(isLineVisible ? 0 : 500)
+        .delay(delay)
         .attr("d", d3.line()
             .x(d => x(d.year))
             .y(d => y(dataFn(d)))
@@ -146,11 +150,11 @@ function drawHistory() {
     // Add connection to detail chart
     historyChart
         .append("path")
-        .classed("connection-line", true);
+        .classed("connection-line", true)
+        .style("opacity", "0");
 
     prepareInitialChart()
     prepareSingleHousehold()
-
 
 }
 
