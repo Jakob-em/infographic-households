@@ -41,18 +41,17 @@ body {
 }
 
 .wrapper {
+  height: 90vh;
   padding: 3em $vertical-padding 0 $vertical-padding;
 }
 
 .heading {
   $heading-margin-left: 40px;
   margin-left: $heading-margin-left;
-  position: fixed;
   width: calc(100vw - 2 * #{$vertical-padding} - #{$heading-margin-left});
 }
 
 .vertical-scroll {
-  margin-top: 170px;
   display: flex;
 
   > * {
@@ -72,7 +71,6 @@ body {
 
   #detail-chart-wrapper {
     width: calc(70vw - 2 * #{$vertical-padding});
-    margin-top: 10px;
     max-height: calc(100vh - 170px - 3em - 150px);
     display: flex;
     flex-direction: column;
@@ -83,25 +81,34 @@ body {
 
     .detail-chart-svg-wrapper {
       height: 100%;
-      margin-top: 40px;
 
       svg {
         display: inline-block;
-        max-width: 40vw;
-        max-height: 70%;
+        max-width: 50vw;
       }
     }
   }
 }
 
-.button-group {
+.history-button-group {
   margin: 2em 0;
-  display: flex;
 
   .navigation {
     margin-left: auto;
     margin-right: 135px;
+    right: 0;
+    position: fixed;
   }
+
+}
+
+.detail-button-group {
+  margin: 2em 0;
+}
+
+.button-group {
+  display: flex;
+
 
   button {
     outline: none;
@@ -174,7 +181,6 @@ body {
 
 #detail-chart {
 
-  cursor: pointer;
   .data-point {
     transition: 500ms ease;
   }
@@ -195,5 +201,19 @@ body {
     font-size: 8px;
     font-weight: bolder;
     white-space: pre;
+  }
+}
+
+
+.meta {
+  font-size: 0.8em;
+  position: fixed;
+  bottom: 1em;
+  right: 2em;
+  > * {
+    margin: .2em 0;
+  }
+  .license img:not(:first-child) {
+    margin-left: 2px;
   }
 }

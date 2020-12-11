@@ -9,7 +9,7 @@
 <div class="wrapper">
     <div class="heading">
         <h1 class="serif">Die Entwicklung des Wohnungsmarkts in Bayern</h1>
-        <div class="button-group">
+        <div class="button-group history-button-group">
             <button id="single-household-button">Anteil der Einpersonenhaushalte</button>
             <button id="average-size-button">Durchschnittliche Haushaltsgröße</button>
             <div class="navigation">
@@ -17,16 +17,30 @@
                 <button id="scroll-forward-button">Weiter</button>
             </div>
         </div>
-        <div></div>
     </div>
     <div class="vertical-scroll">
         <div id="history-chart"></div>
         <div id="detail-chart-wrapper">
-            <h2 class="detail-heading">Verteilung der Einpersonenhaushalte 2019</h2>
+            <div class="detail-heading">
+                <h1 class="serif">Verteilung der Einpersonenhaushalte 2019</h1>
+                <div class="button-group detail-button-group">
+                    <button id="by-age-button">Nach Alter</button>
+                    <button id="by-population-button">Nach Einwohnerzahl</button>
+                </div>
+            </div>
             <div class="detail-chart-svg-wrapper">
                 <svg id="detail-chart"></svg>
             </div>
         </div>
+    </div>
+    <div class="meta">
+        <div class="license">
+            <img height="20px" alt="creative commons" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"/>
+            <img height="20px" alt="by" src="https://mirrors.creativecommons.org/presskit/icons/by.svg"/>
+        </div>
+        <p>Created by Jakob Emmerling</p>
+        <div>Find the Code on <a href="https://github.com/Jakob-em/infographic-households">Github</a></div>
+        <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
     </div>
 </div>
 <script src="assets/ts/index.ts"></script>

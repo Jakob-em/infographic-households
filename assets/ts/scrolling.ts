@@ -9,10 +9,10 @@ window.addEventListener('wheel', (event: WheelEvent) => {
 
 
 function scrollFunction(offset: number) {
-    return ev => {
+    return () => {
         window.scrollBy({left: offset, behavior: "smooth"});
     };
 }
 
-document.getElementById('scroll-forward-button').onclick = scrollFunction(window.innerWidth)
-document.getElementById('scroll-back-button').onclick = scrollFunction(-window.innerWidth)
+document.getElementById('scroll-forward-button').onclick = scrollFunction(window.innerWidth*2)
+document.getElementById('scroll-back-button').onclick = scrollFunction(-window.innerWidth*2)
