@@ -2,10 +2,10 @@ import * as d3 from 'd3';
 import { byAge, byCitySize, PercentagePoint } from './data';
 
 
-let margins = {top: 0, right: 10, bottom: 10, left: 0};
+let margins = {top: 0, right: 10, bottom: 0, left: 0};
 let detailDimensions = {
   width: 300 - margins.left - margins.right,
-  height: 200 - margins.top - margins.bottom
+  height: 180 - margins.top - margins.bottom
 }
 
 const spacingVertical = 14

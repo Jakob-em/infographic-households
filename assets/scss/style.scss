@@ -40,8 +40,14 @@ body {
   font-family: 'Roboto Slab', serif;
 }
 
+body, html {
+  height: 100%;
+}
+
 .wrapper {
-  height: 90vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   padding: 3em $vertical-padding 0 $vertical-padding;
 }
 
@@ -51,12 +57,16 @@ body {
   width: calc(100vw - 2 * #{$vertical-padding} - #{$heading-margin-left});
 }
 
-.vertical-scroll {
-  display: flex;
 
-  > * {
-    flex-shrink: 0;
-  }
+.vertical-scroll {
+  padding-bottom: 6em;
+    overflow-y: hidden;
+    display: flex;
+  width: max-content;
+    > * {
+      flex-shrink: 0;
+    }
+
 
   #history-chart {
     width: calc(100vw - 2 * #{$vertical-padding} + 150px);
@@ -81,10 +91,12 @@ body {
 
     .detail-chart-svg-wrapper {
       height: 100%;
+      overflow-y: hidden;
 
       svg {
         display: inline-block;
         max-width: 50vw;
+        max-height: 100%;
       }
     }
   }
@@ -208,7 +220,7 @@ body {
 .meta {
   font-size: 0.8em;
   position: fixed;
-  bottom: 1em;
+  bottom: .5em;
   right: 2em;
   > * {
     margin: .2em 0;
