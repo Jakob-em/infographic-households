@@ -23,8 +23,7 @@ export const byAge: PercentagePoint[] = [
 ]
 
 export const byCitySize: PercentagePoint[] = [
-  {class: 'low', label: 'weniger als\n 5.000', percentage: 34},
-  {class: 'mid', label: '5.000 \n-\n 100.000', percentage: 13},
-  {class: 'high', label: 'mehr als 100.000', percentage: 53},
+  {class: 'mid', label: 'Land', percentage: 34},
+  {class: 'high', label: 'Stadt', percentage: 53},
 ]
 

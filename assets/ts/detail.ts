@@ -1,11 +1,11 @@
 import * as d3 from 'd3';
-import {byAge, byCitySize, PercentagePoint} from './data';
+import { byAge, byCitySize, PercentagePoint } from './data';
 
 
 let margins = {top: 0, right: 10, bottom: 10, left: 0};
 let detailDimensions = {
-    width: 300 - margins.left - margins.right,
-    height: 150 - margins.top - margins.bottom
+  width: 300 - margins.left - margins.right,
+  height: 200 - margins.top - margins.bottom
 }
 
 const spacingVertical = 14
@@ -30,98 +30,128 @@ let detailChart = d3.select('#detail-chart')
 const perColumn = 5
 
 function showByAge() {
-    toggleDetailButtons(true)
+  toggleDetailButtons(true)
+  detailChart.selectAll(".label")
+      .data(buildLabels(byAge, 'horizontal'))
+      .enter()
+      .append("text")
+      .classed("label", true)
+      .attr('y', (perColumn + 0.5) * spacingVertical)
+      .attr("text-anchor", "middle")
 
-    detailChart.selectAll(".data-point")
-        .data(createMappedData(byAge))
-        .transition()
-        .attr("class", d => d + ' data-point')
+  detailChart.selectAll(".data-point")
+      .data(createMappedData(byAge))
+      .enter()
+      .append('g')
+      .attr("class", d => d)
+      .classed('data-point', true)
+      .html(personIcon)
+      .attr("fill-opacity", 0)
 
-    detailChart.selectAll(".label")
-        .data(buildLabels(byAge))
-        .transition()
-        .attr('x', (d) => d.posX)
-        .each(addLines)
+  detailChart.selectAll(".data-point")
+      .data(createMappedData(byAge))
+      .transition()
+      .attr("fill-opacity", 1)
+      .attr('transform', horizontalPositionAndScale)
+      .attr("class", d => d.class + ' data-point')
+
+  detailChart.selectAll(".label")
+      .data(buildLabels(byAge, 'horizontal'))
+      .transition()
+      .attr('x', (d) => d.posX)
+      .attr('y', (perColumn + 0.5) * spacingVertical)
+      .attr("class", d => d.class + ' label')
+      .each(addLines)
+}
+function horizontalPositionAndScale(d, i){
+  return `translate(${(Math.floor(i / perColumn) * spacingHorizontal)}, ${((i % perColumn) * spacingVertical)}) scale(0.04, 0.042)`
+}
+
+function barPositionAndScale(d){
+  return `translate(${(d.indexInGroup % perColumn) * spacingHorizontal + d.index * spacingHorizontal * (perColumn + 1)}, ${150 - Math.floor(d.indexInGroup / perColumn) * spacingVertical}) scale(0.04, 0.042)`
 }
 
 function showByPopulation() {
-    toggleDetailButtons(false)
+  toggleDetailButtons(false)
 
-    detailChart.selectAll(".data-point")
-        .data(createMappedData(byCitySize))
-        .transition()
-        .attr("class", d => d + ' data-point')
+  detailChart.selectAll(".data-point")
+      .data(createMappedData(byCitySize))
+      .exit()
+      .transition()
+      .duration(100)
+      .attr("fill-opacity", 0)
+      .transition()
+      .delay(200)
+      .remove()
 
-    detailChart.selectAll(".label")
-        .data(buildLabels(byCitySize))
-        .transition()
-        .attr('x', (d) => d.posX)
-        .each(addLines)
+  detailChart.selectAll(".data-point")
+      .data(createMappedData(byCitySize))
+      .transition()
+      .attr('transform', barPositionAndScale)
+      .attr("class", d => d.class + ' data-point')
+
+  detailChart.selectAll(".label")
+      .data(buildLabels(byCitySize, 'vertical'))
+      .transition()
+      .attr("class", d => d.class + ' label')
+      .attr('x', (d) => d.posX)
+      .attr('y', 175)
+      .each(addLines)
+
+  detailChart.selectAll(".label")
+      .data(buildLabels(byCitySize, 'vertical')).exit().remove()
 }
 
 function addLines(d) {
-    let lines = d3.select(this).selectAll('tspan')
-        .data(d.label.split("\n").map((d, i) => ({label: d, index: i})))
+  let lines = d3.select(this).selectAll('tspan')
+      .data(d.label.split("\n").map((d, i) => ({label: d, index: i})))
 
-    let fillLabelDetails = function () {
-        d3.select(this).transition()
-            .attr('dy', (l) => l.index == 0 ? "0em" : "1em")
-            .text((l) => l.label)
-            .attr('x', d.posX)
-    }
+  let fillLabelDetails = function () {
+    d3.select(this).transition()
+        .attr('dy', (l) => l.index == 0 ? "0em" : "1em")
+        .text((l) => l.label)
+        .attr('x', d.posX)
+  }
 
-    lines.enter()
-        .append("tspan")
-        .attr("text-anchor", "middle")
-        .each(fillLabelDetails)
-    lines.exit().remove()
-    lines.each(fillLabelDetails)
+  lines.enter()
+      .append("tspan")
+      .attr("text-anchor", "middle")
+      .each(fillLabelDetails)
+  lines.exit().remove()
+  lines.each(fillLabelDetails)
 }
 
 
 function createMappedData(data: PercentagePoint[]) {
-    return data.map(value => Array.apply(null, Array(value.percentage)).map(() => value.class))
-        .reduce((previousValue, currentValue) => previousValue.concat(currentValue), [])
+  return data.map((value, index) =>
+      Array.apply(null, Array(value.percentage)).map((d, indexInGroup) => ({class: value.class, index, indexInGroup})))
+      .reduce((previousValue, currentValue) => previousValue.concat(currentValue), [])
 }
 
-function buildLabels(data: PercentagePoint[]) {
-    let sum = 0
-    return data.map(value => {
-        let center = sum + value.percentage / 2
-        sum += value.percentage;
-        return {
-            label: value.label,
-            posX: (center / 100) * 20 * spacingHorizontal - spacingHorizontal/2
-        }
-    });
+function buildLabels(data: PercentagePoint[], direction: 'horizontal' | 'vertical') {
+  let sum = 0
+  return data.map((value, index) => {
+    let center = sum + value.percentage / 2
+    sum += value.percentage;
+    let posX;
+    if (direction == 'horizontal') {
+      posX = (center / 100) * 20 * spacingHorizontal - spacingHorizontal / 2
+    } else {
+      posX = (0.5) * (perColumn) * spacingHorizontal + index*(perColumn+1) * spacingHorizontal
+    }
+    return {
+      label: value.label,
+      class: value.class,
+      posX
+    }
+  });
 }
-
-detailChart.selectAll(".data-point")
-    .data(createMappedData(byAge))
-    .enter()
-    .append('g')
-    .attr('transform', (d, i) => `translate(${(Math.floor(i / perColumn) * spacingHorizontal)}, ${((i % perColumn) * spacingVertical)}) scale(0.04, 0.042)`)
-    .attr("class", d => d)
-    .classed('data-point', true)
-    .html(personIcon)
-
-
-detailChart.selectAll(".label")
-    .data(buildLabels(byAge))
-    .enter()
-    .append("text")
-    .classed("label", true)
-    .attr("text-anchor", "middle")
-    .attr('y', (perColumn+0.5) * spacingVertical)
 
 showByAge()
 
-
-
-// Buttons
 function toggleDetailButtons(isByAge: boolean) {
-    d3.select('#by-population-button').classed('active', !isByAge)
-    d3.select('#by-age-button').classed('active', isByAge)
+  d3.select('#by-population-button').classed('active', !isByAge)
+  d3.select('#by-age-button').classed('active', isByAge)
 }
 
 document.getElementById('by-age-button').onclick = () => showByAge()
