@@ -43,6 +43,7 @@ function showByAge() {
       .data(createMappedData(byAge))
       .enter()
       .append('g')
+      .attr('transform', horizontalPositionAndScale)
       .attr("class", d => d)
       .classed('data-point', true)
       .html(personIcon)
