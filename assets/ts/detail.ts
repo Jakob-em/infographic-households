@@ -136,7 +136,7 @@ function buildLabels(data: PercentagePoint[], direction: 'horizontal' | 'vertica
     sum += value.percentage;
     let posX;
     if (direction == 'horizontal') {
-      posX = (center / 100) * 20 * spacingHorizontal - spacingHorizontal / 2
+      posX = (center / 100) * 20 * spacingHorizontal
     } else {
       posX = (0.5) * (perColumn) * spacingHorizontal + index*(perColumn+1) * spacingHorizontal
     }
