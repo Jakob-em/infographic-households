@@ -7,6 +7,15 @@ let historyDimensions = {
   height: 700 - margins.top - margins.bottom
 }
 
+let tooltipDimension = {
+  width: 200,
+  height: 120
+}
+let tooltipPadding = {
+  x: 20,
+  y: 35
+}
+
 
 function offsetDomain(domain, offset) {
   return [domain[0] - offset, domain[1] + offset]
@@ -53,11 +62,11 @@ function prepareInitialChart() {
       .attr('class', 'history-line')
       .attr('fill', 'none')
 
-  historyChart.selectAll('.history-point').data(historicalData).enter()
-      .append('circle')
+  historyChart.selectAll('.history-point').data(historicalData)
+      .enter().append('circle')
       .attr('class', 'history-point')
       .attr('cx', d => x(d.year))
-      .attr('r', 8);
+      .attr('r', 15)
 }
 
 
@@ -70,11 +79,35 @@ function buildConnectionPath(position: { x: any; y: any }) {
   return connectionPath;
 }
 
+
 function redrawPoints(dataFn: (d: HistoricalPoint) => number) {
+  function drawTooltip(e, d) {
+    let isLastElement = historicalData.indexOf(d) == historicalData.length - 1
+    const xPos = x(d.year) + (isLastElement ? (-tooltipDimension.width - tooltipPadding.x) : +tooltipPadding.x)
+    const yPos = y(dataFn(d)) - tooltipDimension.height - tooltipPadding.y
+
+    let tooltip = d3.select('.tooltip')
+    tooltip.transition()
+        .style('opacity', 1)
+    tooltip
+        .attr('transform', `translate(${xPos}, ${yPos})`)
+  }
+
+
   historyChart.selectAll('.history-point')
       .data(historicalData)
       .transition()
       .attr('cy', d => y(dataFn(d)))
+
+  historyChart.selectAll('.history-point')
+      .on('mouseover', drawTooltip)
+      .on('mouseout', function () {
+
+        d3.select('.tooltip').transition()
+            .duration(300)
+            .style('opacity', 0);
+      });
+
 
   const lastPoint = historicalData[historicalData.length - 1]
   const position = {x: x(lastPoint.year), y: y(dataFn(lastPoint))}
@@ -162,8 +195,19 @@ function drawHistory() {
       .classed('connection-line', true)
       .style('opacity', '0');
 
+
   prepareInitialChart()
   prepareSingleHousehold()
+
+  // Add tooltip
+  historyChart
+      .append('g')
+      .classed('tooltip', true)
+      .append('rect')
+      .attr('width', tooltipDimension.width)
+      .attr('height', tooltipDimension.height)
+      .attr("rx", 10)
+      .attr("ry", 10)
 
 }
 

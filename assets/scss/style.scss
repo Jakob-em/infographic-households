@@ -157,6 +157,15 @@ body, html {
 
 #history-chart {
   margin-top: 1em;
+  position: relative;
+  .tooltip {
+    opacity: 0;
+    fill: $primary;
+    z-index: 100;
+    //stroke: $primary-darker;
+    stroke-width: 8px;
+    border-radius: 10px;
+  }
 
   .label {
     font-size: 1.2em;
@@ -175,7 +184,7 @@ body, html {
 .history-point {
   fill: $primary;
   transition: 200ms ease;
-  stroke-width: 28px;
+  stroke-width: 60px;
   stroke: transparent;
   cursor: pointer;
 
