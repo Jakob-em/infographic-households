@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 import {historicalData, HistoricalPoint} from './data';
 
-let margins = {top: 10, right: 250, bottom: 50, left: 60};
+let margins = {top: 10, right: 250, bottom: 85, left: 60};
 let historyDimensions = {
     width: 1920 - margins.left - margins.right,
     height: 700 - margins.top - margins.bottom
@@ -146,6 +146,15 @@ function drawHistory() {
         .append("g")
         .attr("class", "axis y")
         .attr("transform", `translate(-10,0)`)
+
+    // Add label for x axis
+    historyChart
+        .append("text")
+        .text('Jahr der Zählung')
+        .attr("text-anchor", "end")
+        .attr("class", "label x")
+        .attr("x", historyDimensions.width)
+        .attr("y", historyDimensions.height + margins.bottom - 20)
 
     // Add connection to detail chart
     historyChart
