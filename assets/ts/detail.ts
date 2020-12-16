@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { byAge, byCitySize, PercentagePoint } from './data';
+import {byAge, byCitySize, PercentagePoint} from './data';
 
 
 let margins = {top: 0, right: 10, bottom: 0, left: 0};
@@ -20,103 +20,104 @@ const personIcon = `<g>
 </g>`
 
 let detailChart = d3.select('#detail-chart')
-    .attr("preserveAspectRatio", 'xMaxYMax meet')
-    .attr("viewBox", `0 0 ${detailDimensions.width + margins.right + margins.left} ${detailDimensions.height + margins.top + margins.bottom}`)
-    .append("g")
-    .attr("transform",
-        "translate(" + margins.left + "," + margins.top + ")")
+    .attr('preserveAspectRatio', 'xMaxYMax meet')
+    .attr('viewBox', `0 0 ${detailDimensions.width + margins.right + margins.left} ${detailDimensions.height + margins.top + margins.bottom}`)
+    .append('g')
+    .attr('transform',
+        'translate(' + margins.left + ',' + margins.top + ')')
 
 
 const perColumn = 5
 
 function showByAge() {
   toggleDetailButtons(true)
-  detailChart.selectAll(".label")
+  detailChart.selectAll('.label')
       .data(buildLabels(byAge, 'horizontal'))
       .enter()
-      .append("text")
-      .classed("label", true)
+      .append('text')
+      .classed('label', true)
       .attr('y', (perColumn + 0.5) * spacingVertical)
-      .attr("text-anchor", "middle")
+      .attr('text-anchor', 'middle')
 
-  detailChart.selectAll(".data-point")
+  detailChart.selectAll('.data-point')
       .data(createMappedData(byAge))
       .enter()
       .append('g')
       .attr('transform', horizontalPositionAndScale)
-      .attr("class", d => d)
+      .attr('class', d => d)
       .classed('data-point', true)
       .html(personIcon)
-      .attr("fill-opacity", 0)
+      .attr('fill-opacity', 0)
 
-  detailChart.selectAll(".data-point")
+  detailChart.selectAll('.data-point')
       .data(createMappedData(byAge))
       .transition()
-      .attr("fill-opacity", 1)
+      .attr('fill-opacity', 1)
       .attr('transform', horizontalPositionAndScale)
-      .attr("class", d => d.class + ' data-point')
+      .attr('class', d => d.class + ' data-point')
 
-  detailChart.selectAll(".label")
+  detailChart.selectAll('.label')
       .data(buildLabels(byAge, 'horizontal'))
       .transition()
       .attr('x', (d) => d.posX)
       .attr('y', (perColumn + 0.5) * spacingVertical)
-      .attr("class", d => d.class + ' label')
+      .attr('class', d => d.class + ' label')
       .each(addLines)
 }
-function horizontalPositionAndScale(d, i){
+
+function horizontalPositionAndScale(d, i) {
   return `translate(${(Math.floor(i / perColumn) * spacingHorizontal)}, ${((i % perColumn) * spacingVertical)}) scale(0.04, 0.042)`
 }
 
-function barPositionAndScale(d){
+function barPositionAndScale(d) {
   return `translate(${(d.indexInGroup % perColumn) * spacingHorizontal + d.index * spacingHorizontal * (perColumn + 1)}, ${150 - Math.floor(d.indexInGroup / perColumn) * spacingVertical}) scale(0.04, 0.042)`
 }
 
 function showByPopulation() {
   toggleDetailButtons(false)
 
-  detailChart.selectAll(".data-point")
+  detailChart.selectAll('.data-point')
       .data(createMappedData(byCitySize))
       .exit()
       .transition()
       .duration(100)
-      .attr("fill-opacity", 0)
+      .attr('fill-opacity', 0)
       .transition()
       .delay(200)
       .remove()
 
-  detailChart.selectAll(".data-point")
+  detailChart.selectAll('.data-point')
       .data(createMappedData(byCitySize))
       .transition()
       .attr('transform', barPositionAndScale)
-      .attr("class", d => d.class + ' data-point')
+      .attr('class', d => d.class + ' data-point')
 
-  detailChart.selectAll(".label")
+  detailChart.selectAll('.label')
       .data(buildLabels(byCitySize, 'vertical'))
       .transition()
-      .attr("class", d => d.class + ' label')
+      .attr('class', d => d.class + ' label')
       .attr('x', (d) => d.posX)
       .attr('y', 175)
       .each(addLines)
 
-  detailChart.selectAll(".label")
+  detailChart.selectAll('.label')
       .data(buildLabels(byCitySize, 'vertical')).exit().remove()
 }
 
 function addLines(d) {
   let lines = d3.select(this).selectAll('tspan')
-      .data(d.label.split("\n").map((d, i) => ({label: d, index: i})))
+      .data(d.label.split('\n').map((d, i) => ({label: d, index: i})))
 
   let fillLabelDetails = function () {
     d3.select(this).transition()
-        .attr('dy', (l) => l.index == 0 ? "0em" : "1em")
+        .attr('dy', (l) => l.index == 0 ? '0em' : '1em')
         .text((l) => l.label)
         .attr('x', d.posX)
   }
 
   lines.enter()
-      .append("tspan")
-      .attr("text-anchor", "middle")
+      .append('tspan')
+      .attr('text-anchor', 'middle')
       .each(fillLabelDetails)
   lines.exit().remove()
   lines.each(fillLabelDetails)
@@ -125,7 +126,11 @@ function addLines(d) {
 
 function createMappedData(data: PercentagePoint[]) {
   return data.map((value, index) =>
-      Array.apply(null, Array(value.percentage)).map((d, indexInGroup) => ({class: value.class, index, indexInGroup})))
+          Array.apply(null, Array(value.percentage)).map((d, indexInGroup) => ({
+            class: value.class,
+            index,
+            indexInGroup
+          })))
       .reduce((previousValue, currentValue) => previousValue.concat(currentValue), [])
 }
 
@@ -138,7 +143,7 @@ function buildLabels(data: PercentagePoint[], direction: 'horizontal' | 'vertica
     if (direction == 'horizontal') {
       posX = (center / 100) * 20 * spacingHorizontal
     } else {
-      posX = (0.5) * (perColumn) * spacingHorizontal + index*(perColumn+1) * spacingHorizontal
+      posX = (0.5) * (perColumn) * spacingHorizontal + index * (perColumn + 1) * spacingHorizontal
     }
     return {
       label: value.label,

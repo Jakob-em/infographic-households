@@ -60,12 +60,13 @@ body, html {
 
 .vertical-scroll {
   padding-bottom: 6em;
-    overflow-y: hidden;
-    display: flex;
+  overflow-y: hidden;
+  display: flex;
   width: max-content;
-    > * {
-      flex-shrink: 0;
-    }
+
+  > * {
+    flex-shrink: 0;
+  }
 
 
   #history-chart {
@@ -227,9 +228,11 @@ body, html {
   position: fixed;
   bottom: .5em;
   right: 2em;
+
   > * {
     margin: .2em 0;
   }
+
   .license img:not(:first-child) {
     margin-left: 2px;
   }
