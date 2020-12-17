@@ -8,12 +8,12 @@ let historyDimensions = {
 }
 
 let tooltipDimension = {
-  width: 200,
-  height: 120
+  width: 120,
+  height: 50
 }
 let tooltipPadding = {
-  x: 20,
-  y: 35
+  x: 0,
+  y: 25
 }
 
 
@@ -30,9 +30,11 @@ const x = d3.scaleLinear()
     .domain(offsetDomain(d3.extent(historicalData, d => d.year), 2))
     .range([0, historyDimensions.width])
 
+let singleHousehold = true;
 
 function prepareSingleHousehold() {
   toggleHistoryButtons(true);
+  singleHousehold = true
 
   y.domain([0.6, 0]).range([0, historyDimensions.height]);
   yAxis.tickFormat(d3.format('.0%'))
@@ -48,7 +50,7 @@ function toggleHistoryButtons(isSingleHousehold: boolean) {
 
 function prepareAverageHouseholdSize() {
   toggleHistoryButtons(false);
-
+  singleHousehold = false
   y.domain([5, 0]).range([0, historyDimensions.height]);
   yAxis.tickFormat(d3.format('.111'))
   historyChart.select('.axis.y').transition().call(yAxis)
@@ -82,8 +84,7 @@ function buildConnectionPath(position: { x: any; y: any }) {
 
 function redrawPoints(dataFn: (d: HistoricalPoint) => number) {
   function drawTooltip(e, d) {
-    let isLastElement = historicalData.indexOf(d) == historicalData.length - 1
-    const xPos = x(d.year) + (isLastElement ? (-tooltipDimension.width - tooltipPadding.x) : +tooltipPadding.x)
+    const xPos = x(d.year) - tooltipDimension.width / 2
     const yPos = y(dataFn(d)) - tooltipDimension.height - tooltipPadding.y
 
     let tooltip = d3.select('.tooltip')
@@ -91,6 +92,17 @@ function redrawPoints(dataFn: (d: HistoricalPoint) => number) {
         .style('opacity', 1)
     tooltip
         .attr('transform', `translate(${xPos}, ${yPos})`)
+    tooltip.select('text').remove()
+
+    const dataLabel = (singleHousehold ? dataFn(d) * 100 : dataFn(d)) + (singleHousehold ? '%' : '')
+    tooltip
+        .append('text')
+        .attr('y', tooltipDimension.height / 2)
+        .attr('x', tooltipDimension.width / 2)
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'middle')
+        .html(`${d.year}: <tspan> ${dataLabel}</tspan>`)
+
   }
 
 
@@ -206,8 +218,8 @@ function drawHistory() {
       .append('rect')
       .attr('width', tooltipDimension.width)
       .attr('height', tooltipDimension.height)
-      .attr("rx", 10)
-      .attr("ry", 10)
+      .attr('rx', 10)
+      .attr('ry', 10)
 
 }
 

@@ -20,7 +20,7 @@ const personIcon = `<g>
 </g>`
 
 let detailChart = d3.select('#detail-chart')
-    .attr('preserveAspectRatio', 'xMaxYMax meet')
+    .attr('preserveAspectRatio', 'xMinYMin meet')
     .attr('viewBox', `0 0 ${detailDimensions.width + margins.right + margins.left} ${detailDimensions.height + margins.top + margins.bottom}`)
     .append('g')
     .attr('transform',

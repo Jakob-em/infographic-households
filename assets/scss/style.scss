@@ -158,13 +158,26 @@ body, html {
 #history-chart {
   margin-top: 1em;
   position: relative;
+
   .tooltip {
     opacity: 0;
-    fill: $primary;
     z-index: 100;
     //stroke: $primary-darker;
     stroke-width: 8px;
     border-radius: 10px;
+
+    rect {
+      fill: $primary;
+    }
+
+    text {
+      fill: $text-light;
+      font-size: 20px;
+
+      tspan {
+        font-weight: bold;
+      }
+    }
   }
 
   .label {
