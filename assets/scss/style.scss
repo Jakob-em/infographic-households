@@ -82,9 +82,9 @@ body, html {
 
   #detail-chart-wrapper {
     width: calc(70vw - 2 * #{$vertical-padding});
-    max-height: calc(100vh - 170px - 3em - 150px);
     display: flex;
     flex-direction: column;
+    height: 100%;
 
     .detail-heading {
       margin-left: .5em
