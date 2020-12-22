@@ -1,18 +1,28 @@
-const scrollMultiplier = 25;
-
-window.addEventListener('wheel', (event: WheelEvent) => {
-    const maxOffset = (document.body.scrollWidth - document.body.clientWidth)
-    const delta = event.deltaY / Math.abs(event.deltaY) * scrollMultiplier;
-    const newOffset = Math.max(0, Math.min(maxOffset, pageXOffset + delta))
-    window.scrollTo({left: newOffset});
-})
-
-
-function scrollFunction(offset: number) {
-    return () => {
-        window.scrollBy({left: offset, behavior: "smooth"});
-    };
+function disable(id: string, disabled: boolean) {
+  const el = document.getElementById(id);
+  if (disabled) {
+    el.setAttribute('disabled', 'true')
+  } else {
+    el.removeAttribute('disabled')
+  }
 }
 
-document.getElementById('scroll-forward-button').onclick = scrollFunction(window.innerWidth*2)
-document.getElementById('scroll-back-button').onclick = scrollFunction(-window.innerWidth*2)
+function updateButtonState() {
+  const currentScroll = window.scrollX;
+  disable('scroll-back-button', currentScroll == 0)
+  disable('scroll-forward-button', currentScroll == document.body.scrollWidth - window.innerWidth)
+}
+
+window.addEventListener('scroll', (event: Event) => {
+  updateButtonState();
+})
+
+function scrollFunction(offset: number) {
+  return () => {
+    window.scrollBy({left: offset, behavior: 'smooth'});
+  };
+}
+
+document.getElementById('scroll-forward-button').onclick = scrollFunction(window.innerWidth * 5)
+document.getElementById('scroll-back-button').onclick = scrollFunction(-window.innerWidth * 5)
+updateButtonState()

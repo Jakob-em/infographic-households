@@ -10,6 +10,8 @@ $secondary: #E63946;
 $text: #14213D;
 $text-light: #F1FAEE;
 
+$disabled: #555;
+
 // Spacing
 $vertical-padding: 2em;
 
@@ -144,10 +146,16 @@ body, html {
 
     }
 
-    &:hover {
+    &:hover:not(:disabled) {
       color: $text-light;
       background: $primary-darker;
       border: solid 1px $primary-darker;
+    }
+
+    &:disabled {
+      color: $disabled;
+      border-color: $disabled;
+      cursor: not-allowed;
     }
   }
 }
