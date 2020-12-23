@@ -29,7 +29,17 @@
                 </div>
             </div>
             <div class="detail-chart-svg-wrapper">
-                <svg id="detail-chart"></svg>
+                <svg id="detail-chart">
+                    <defs>
+                        <linearGradient id="special-low"
+                                        gradientTransform="rotate(40)">
+                            <stop offset="0%" class="special-stop"/>
+                            <stop offset="55%" class="special-stop"/>
+                            <stop offset="56%" class="low-stop"/>
+                            <stop offset="100%" class="low-stop" />
+                        </linearGradient>
+                    </defs>
+                </svg>
             </div>
         </div>
     </div>

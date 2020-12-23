@@ -6,6 +6,7 @@ $primary-lighter: #accbe8;
 $primary-darker: #1D3557;
 
 $secondary: #E63946;
+$accent: #dcac06;
 
 $text: #14213D;
 $text-light: #F1FAEE;
@@ -61,6 +62,7 @@ body, html {
 
 
 .vertical-scroll {
+  padding-right: 100px;
   padding-bottom: 6em;
   overflow-y: hidden;
   display: flex;
@@ -98,7 +100,7 @@ body, html {
 
       svg {
         display: inline-block;
-        max-width: 50vw;
+        max-width: 70vw;
         max-height: 100%;
       }
     }
@@ -234,21 +236,49 @@ body, html {
   }
 
   .low {
-    fill: #457B9D;
+    fill: $primary;
   }
 
   .mid {
-    fill: #E63946;
+    fill: $secondary;
   }
 
   .high {
-    fill: #1D3557;
+    fill: $primary-darker;
+  }
+
+  .special-low-gradient {
+    fill: url(#special-low)
+  }
+  .special {
+    fill: $accent;
+  }
+  .special-stop {
+    stop-color: $accent;
+  }
+  .low-stop {
+    stop-color: $primary;
+  }
+
+  .special-line {
+    stroke: $accent;
+    fill: none;
+    stroke-width: 2px;
   }
 
   .label {
     font-size: 8px;
     font-weight: bolder;
     white-space: pre;
+  }
+
+  .info {
+    font-size: 8px;
+    color: $text;
+
+    .bold {
+      font-weight: bolder;
+    }
   }
 }
 
