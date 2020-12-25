@@ -158,16 +158,16 @@ function showByPopulation() {
 
   addInfoText(160, 20,
       `In den bayerischen Großstädten mit
-<tspan class="high bold">mehr als 100 000 Einwohnern</tspan> fiel der
+<tspan class="mid bold">mehr als 100 000 Einwohnern</tspan> fiel der
 Anteil der Einpersonenhaushalte
 besonders hoch aus. Hier bestand mehr
-als jeder zweite Haushalt (<tspan class="high bold">53 Prozent</tspan>) aus
+als jeder zweite Haushalt (<tspan class="mid bold">53 Prozent</tspan>) aus
 nur einer Person.
  
 Im Vergleich dazu waren in Gemeinden
-mit <tspan class="mid bold">weniger als 5 000 Einwohnern</tspan>
+mit <tspan class="low bold">weniger als 5 000 Einwohnern</tspan>
 Singlehaushalte mit einem Anteil von
-rund <tspan class="mid bold">34 Prozent</tspan> weit weniger häufig vertreten
+rund <tspan class="low bold">34 Prozent</tspan> weit weniger häufig vertreten
         `)
 }
 

@@ -1,12 +1,12 @@
 // Color
-$background: #F1FAEE;
+$background: #D0F1D0;
 
-$primary: #457B9D;
+$primary: rgb(0, 141, 201);
 $primary-lighter: #accbe8;
-$primary-darker: #1D3557;
+$primary-darker: #00567A;
 
-$secondary: #E63946;
-$accent: #dcac06;
+$secondary: rgb(46,163,46);
+$accent: #C20E1A;
 
 $text: #14213D;
 $text-light: #F1FAEE;
@@ -114,7 +114,6 @@ body, html {
     margin-left: auto;
     margin-right: 135px;
     right: 0;
-    position: fixed;
   }
 
 }
@@ -126,42 +125,45 @@ body, html {
 .button-group {
   display: flex;
 
+}
 
-  button {
-    outline: none;
-    background: none;
-    color: $primary;
-    padding: 1em;
+
+button {
+  outline: none;
+  background: none;
+  color: $primary;
+  padding: 1em;
+  border: solid 1px $primary;
+  border-radius: 1em;
+  cursor: pointer;
+  margin-right: 1em;
+  transition: color 200ms ease, opacity 500ms ease;
+  font-size: 1em;
+  font-weight: bold;
+
+  &.active {
+    color: $text-light;
+    background: $primary;
     border: solid 1px $primary;
-    border-radius: 1em;
-    cursor: pointer;
-    margin-right: 1em;
-    transition: 100ms ease;
-    font-size: 1em;
-    font-weight: bold;
 
+  }
 
-    &.active {
-      color: $text-light;
-      background: $primary;
-      border: solid 1px $primary;
+  &:hover:not(:disabled) {
+    color: $text-light;
+    background: $primary-darker;
+    border: solid 1px $primary-darker;
+  }
 
-    }
-
-    &:hover:not(:disabled) {
-      color: $text-light;
-      background: $primary-darker;
-      border: solid 1px $primary-darker;
-    }
-
-    &:disabled {
-      color: $disabled;
-      border-color: $disabled;
-      cursor: not-allowed;
-    }
+  &:disabled {
+    opacity: 0;
+    cursor: not-allowed;
   }
 }
 
+.detail-headline {
+  display: flex;
+  align-items: center;
+}
 
 //History Chart
 
@@ -177,7 +179,7 @@ body, html {
     border-radius: 10px;
 
     rect {
-      fill: $primary;
+      fill: $primary-darker;
     }
 
     text {
@@ -212,7 +214,7 @@ body, html {
   cursor: pointer;
 
   &:hover {
-    fill: $secondary;
+    fill: $primary-darker;
   }
 }
 
@@ -250,12 +252,15 @@ body, html {
   .special-low-gradient {
     fill: url(#special-low)
   }
+
   .special {
     fill: $accent;
   }
+
   .special-stop {
     stop-color: $accent;
   }
+
   .low-stop {
     stop-color: $primary;
   }
