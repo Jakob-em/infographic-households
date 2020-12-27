@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import {historicalData, HistoricalPoint} from './data';
+import {addLinesFunction} from './utils';
 
 let margins = {top: 10, right: 250, bottom: 85, left: 60};
 let historyDimensions = {
@@ -15,7 +16,10 @@ let tooltipPadding = {
   x: 0,
   y: 25
 }
-
+let highlightDimension = {
+  width: 500,
+  height: 135
+}
 
 function offsetDomain(domain, offset) {
   return [domain[0] - offset, domain[1] + offset]
@@ -143,6 +147,78 @@ function redrawPoints(dataFn: (d: HistoricalPoint) => number) {
           .x(d => x(d.year))
           .y(d => y(dataFn(d)))
       )
+
+  addHighlight(dataFn);
+
+}
+
+function addHighlight(dataFn: (d: HistoricalPoint) => number) {
+  const lastPoint = historicalData[historicalData.length - 1]
+  const secondLastPoint = historicalData[historicalData.length - 2]
+  const lineMarkerX = x(secondLastPoint.year) + (x(lastPoint.year) - x(secondLastPoint.year)) / 2;
+  const lineMarkerY = y(dataFn(secondLastPoint)) + (y(dataFn(lastPoint)) - y(dataFn(secondLastPoint))) / 2;
+  const isAboveData = lineMarkerY > historyDimensions.height / 2
+  const highlightTextX = lineMarkerX - 270
+  const highlightTextY = isAboveData ? 50 : historyDimensions.height / 2 + 60
+
+  if (historyChart.select('.history-highlight').empty()) {
+    historyChart.append('circle')
+        .classed('history-zoom', true)
+        .classed('history-highlight', true)
+        .attr('cx', lineMarkerX)
+        .attr('r', 50)
+
+    historyChart.append('rect')
+        .classed('history-highlight-text-background', true)
+        .classed('history-highlight', true)
+        .attr('x', highlightTextX)
+        .attr('width', highlightDimension.width)
+        .attr('height', highlightDimension.height)
+        .each(rounded)
+
+    historyChart.append('text')
+        .classed('history-highlight-text', true)
+        .classed('history-highlight', true)
+        .datum({
+          label:
+`Von 1999 bis 2019 stieg die Anzahl der
+Haushalte um 18%. Wobei die Anzahl der
+Singlehaushalte um 41% stieg.
+Gleichzeitig fiel die Anzahl der Haushalte
+mit 5 oder mehr Personen um mehr als 19%
+`, posX: highlightTextX + 20
+        })
+        .each(addLinesFunction('left', '1.2em'))
+
+    historyChart
+        .append('path')
+        .classed('history-highlight-line', true)
+  }
+
+  historyChart
+      .select('.history-zoom')
+      .transition()
+      .attr('cy', lineMarkerY)
+
+  historyChart
+      .select('.history-highlight-text-background')
+      .transition()
+      .attr('y', highlightTextY)
+
+  historyChart
+      .select('.history-highlight-text')
+      .transition()
+      .attr('y', highlightTextY + 30)
+
+  const highlightLine = d3.path();
+  highlightLine.moveTo(lineMarkerX, lineMarkerY + (isAboveData ? -50 : 50))
+  highlightLine.lineTo(highlightTextX+highlightDimension.width/2, highlightTextY + (isAboveData ? highlightDimension.height : 0))
+
+  historyChart
+      .select('.history-highlight-line')
+      .transition()
+      .attr('d', highlightLine)
+
 }
 
 
@@ -153,6 +229,12 @@ let historyChart = d3.select('#history-chart')
     .append('g')
     .attr('transform',
         'translate(' + margins.left + ',' + margins.top + ')')
+
+function rounded() {
+  d3.select(this)
+      .attr('rx', 10)
+      .attr('ry', 10)
+}
 
 function drawHistory() {
 
@@ -218,8 +300,8 @@ function drawHistory() {
       .append('rect')
       .attr('width', tooltipDimension.width)
       .attr('height', tooltipDimension.height)
-      .attr('rx', 10)
-      .attr('ry', 10)
+      .each(rounded)
+
 
 }
 

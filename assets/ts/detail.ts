@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import {byAge, byCitySize, PercentagePoint} from './data';
+import {addLinesFunction} from './utils';
 
 
 let margins = {top: 0, right: 10, bottom: 0, left: 0};
@@ -170,30 +171,6 @@ Singlehaushalte mit einem Anteil von
 rund <tspan class="low bold">34 Prozent</tspan> weit weniger häufig vertreten
         `)
 }
-
-function addLinesFunction(textAnchor, lineSpacing = '1em') {
-
-  return function addLines(d) {
-    let lines = d3.select(this).selectAll('tspan')
-        .data(d.label.split('\n').map((d, i) => ({label: d, index: i})))
-
-    let fillLabelDetails = function () {
-      d3.select(this)
-          .html((l) => l.label)
-          .transition()
-          .attr('dy', (l) => l.index == 0 ? '0em' : lineSpacing)
-          .attr('x', d.posX)
-    }
-
-    lines.enter()
-        .append('tspan')
-        .attr('text-anchor', textAnchor)
-        .each(fillLabelDetails)
-    lines.exit().remove()
-    lines.each(fillLabelDetails)
-  }
-}
-
 
 function createMappedData(data: PercentagePoint[]) {
   return data.map((value, index) =>

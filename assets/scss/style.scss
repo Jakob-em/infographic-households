@@ -1,5 +1,5 @@
 // Color
-$background: #D0F1D0;
+$background: #E0F5E0;
 
 $primary: rgb(0, 141, 201);
 $primary-lighter: #accbe8;
@@ -176,7 +176,6 @@ button {
     z-index: 100;
     //stroke: $primary-darker;
     stroke-width: 8px;
-    border-radius: 10px;
 
     rect {
       fill: $primary-darker;
@@ -195,6 +194,26 @@ button {
   .label {
     font-size: 1.2em;
     font-weight: bold;
+  }
+  .history-zoom {
+    fill: none;
+    stroke-width: 2px;
+    stroke-dasharray: 5;
+    stroke: $primary;
+  }
+  .history-highlight-text-background {
+    fill: $primary;
+    border-radius: 10px;
+  }
+
+  .history-highlight-text {
+    fill: $text-light;
+    font-size: 18px;
+  }
+
+  .history-highlight-line {
+    stroke: $primary;
+    stroke-width: 2px;
   }
 }
 
