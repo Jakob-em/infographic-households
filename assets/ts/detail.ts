@@ -92,7 +92,7 @@ function showByAge() {
 zuzuschreiben, während <tspan class="high bold">40 Prozent</tspan> bereits das <tspan class="high bold">60. Lebensjahr vollendet</tspan> hatten.
  
 Die größte Gruppe unter den Singlehaushalten bilden dabei die
-<tspan class="special bold">25- bis unter 30-jährigen </tspan>, ihr Anteil beträgt <tspan class="special bold">rund ein Zehntel</tspan>.
+<tspan class="special bold">25- bis unter 30-jährigen</tspan>, ihr Anteil beträgt <tspan class="special bold">rund ein Zehntel</tspan>.
       `)
 }
 
@@ -157,7 +157,7 @@ function showByPopulation() {
   detailChart.selectAll('.label')
       .data(buildLabels(byCitySize, 'vertical')).exit().remove()
 
-  addInfoText(160, 20,
+  addInfoText(160, 10,
       `In den bayerischen Großstädten mit
 <tspan class="mid bold">mehr als 100 000 Einwohnern</tspan> fiel der
 Anteil der Einpersonenhaushalte
@@ -169,7 +169,12 @@ Im Vergleich dazu waren in Gemeinden
 mit <tspan class="low bold">weniger als 5 000 Einwohnern</tspan>
 Singlehaushalte mit einem Anteil von
 rund <tspan class="low bold">34 Prozent</tspan> weit weniger häufig vertreten
-        `)
+ 
+Ebenso dramatisch ist der Unterschied bei den
+durchschnittlichen Haushaltsgrößen von <tspan class="low bold">2.21</tspan>
+auf dem <tspan class="low bold">Land</tspan> zu <tspan class="mid bold">1.8</tspan> Personen pro Haushalt
+in den <tspan class="mid bold">Großstädten</tspan>.
+`)
 }
 
 function createMappedData(data: PercentagePoint[]) {

@@ -9,8 +9,9 @@ function disable(id: string, disabled: boolean) {
 
 function updateButtonState() {
   const currentScroll = window.scrollX;
-  disable('scroll-back-button', currentScroll == 0)
-  disable('scroll-forward-button', currentScroll == document.body.scrollWidth - window.innerWidth)
+  const threshold = 10;
+  disable('scroll-back-button', currentScroll < threshold)
+  disable('scroll-forward-button', Math.abs(currentScroll - (document.body.scrollWidth - window.innerWidth)) < threshold)
 }
 
 window.addEventListener('scroll', (event: Event) => {

@@ -1,5 +1,5 @@
 // Color
-$background: #E0F5E0;
+$background: #F0FAF0;
 
 $primary: rgb(0, 141, 201);
 $primary-lighter: #accbe8;
@@ -47,17 +47,21 @@ body, html {
   height: 100%;
 }
 
+.sub-headline {
+  margin-top: .5em;
+}
+
 .wrapper {
   height: 100%;
   display: flex;
   flex-direction: column;
   padding: 3em $vertical-padding 0 $vertical-padding;
 }
+$heading-margin-x: 50px;
 
 .heading {
-  $heading-margin-left: 40px;
-  margin-left: $heading-margin-left;
-  width: calc(100vw - 2 * #{$vertical-padding} - #{$heading-margin-left});
+  margin: 0 $heading-margin-x;
+  width: calc(100vw - 2 * #{$vertical-padding} - #{$heading-margin-x});
 }
 
 
@@ -67,14 +71,13 @@ body, html {
   overflow-y: hidden;
   display: flex;
   width: max-content;
-
   > * {
     flex-shrink: 0;
   }
 
 
   #history-chart {
-    width: calc(100vw - 2 * #{$vertical-padding} + 150px);
+    width: calc(100vw - 2 * #{$vertical-padding} + 180px);
     min-width: 1400px;
 
     svg {
@@ -108,11 +111,11 @@ body, html {
 }
 
 .history-button-group {
-  margin: 2em 0;
+  margin: 1em 0 1em;
 
   .navigation {
     margin-left: auto;
-    margin-right: 135px;
+    margin-right: 20px;
     right: 0;
   }
 
@@ -140,22 +143,53 @@ button {
   transition: color 200ms ease, opacity 500ms ease;
   font-size: 1em;
   font-weight: bold;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  span {
+    color: inherit;
+  }
+  svg {
+    display: inline;
+    height: 1em;
+    stroke: $primary;
+  }
+  svg:last-child {
+    margin-left: .5em;
+  }
+  svg:first-child {
+    margin-right: .5em;
+  }
+  svg.filled {
+    fill: $primary;
+  }
   &.active {
     color: $text-light;
     background: $primary;
     border: solid 1px $primary;
-
+    svg {
+      stroke: $text-light;
+    }
+    svg.filled {
+      fill: $text-light;
+    }
   }
 
   &:hover:not(:disabled) {
     color: $text-light;
     background: $primary-darker;
     border: solid 1px $primary-darker;
+    svg {
+      stroke: $text-light;
+    }
+    svg.filled {
+      fill: $text-light;
+    }
   }
 
   &:disabled {
     opacity: 0;
+    visibility: hidden;
     cursor: not-allowed;
   }
 }
@@ -201,19 +235,27 @@ button {
     stroke-dasharray: 5;
     stroke: $primary;
   }
-  .history-highlight-text-background {
+  .highlight-text-background {
     fill: $primary;
     border-radius: 10px;
   }
 
-  .history-highlight-text {
+  .highlight-text-background.detailed {
+    fill: $primary-darker;
+  }
+
+  .highlight-text {
     fill: $text-light;
     font-size: 18px;
   }
 
-  .history-highlight-line {
+  .highlight-line {
     stroke: $primary;
     stroke-width: 2px;
+    fill: none;
+  }
+  .highlight-line.detailed, .history-zoom.detailed {
+    stroke: $primary-darker;
   }
 }
 

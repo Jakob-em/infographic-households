@@ -9,11 +9,38 @@
 <div class="wrapper">
     <div class="heading">
         <h1 class="serif">Die Entwicklung des Wohnungsmarkts in Bayern</h1>
+        <p class="sub-headline">
+            2019 wohnten knapp 6,5 Millionen Haushalte in Bayern, davon wurden im Rahmen des Mikrozensus 1% gezählt. <br>
+            Vor allem bei den Einpersonenhaushalten sind in diesem Rahmen interessante Entwicklungen zu erkennen.
+        </p>
         <div class="button-group history-button-group">
-            <button id="single-household-button">Anteil der Einpersonenhaushalte</button>
-            <button id="average-size-button">Durchschnittliche Haushaltsgröße</button>
+            <button id="single-household-button">
+                <svg viewBox="0 0 297 297" class="filled">
+                    <g>
+                        <ellipse cx="148.5" cy="34.611" rx="34.458" ry="34.611"/>
+                        <path d="M222.403,176.902l-8.645-60.51C210.586,95.554,192.096,78.6,172.541,78.6h-3.001c-6.37,3.078-13.508,4.806-21.04,4.806
+                            c-7.532,0-14.669-1.728-21.04-4.806h-2.998c-19.557,0-38.048,16.954-41.228,37.844l-8.638,60.459
+                            c-0.313,2.191,0.699,4.359,2.581,5.525l24.769,15.343l11.543,80.929C114.831,288.96,123.491,297,133.205,297h30.589
+                            c9.714,0,18.375-8.04,19.708-18.237l11.55-80.992l24.77-15.344C221.703,181.262,222.717,179.094,222.403,176.902z"/>
+                    </g>
+                </svg>
+                <span>Anteil der Einpersonenhaushalte</span>
+            </button>
+            <button id="average-size-button">
+                <svg viewBox="0 1 511 511.999" class="filled">
+                    <path d="m498.699219 222.695312c-.015625-.011718-.027344-.027343-.039063-.039062l-208.855468-208.847656c-8.902344-8.90625-20.738282-13.808594-33.328126-13.808594-12.589843 0-24.425781 4.902344-33.332031 13.808594l-208.746093 208.742187c-.070313.070313-.144532.144531-.210938.214844-18.28125 18.386719-18.25 48.21875.089844 66.558594 8.378906 8.382812 19.441406 13.234375 31.273437 13.746093.484375.046876.96875.070313 1.457031.070313h8.320313v153.695313c0 30.417968 24.75 55.164062 55.167969 55.164062h81.710937c8.285157 0 15-6.71875 15-15v-120.5c0-13.878906 11.292969-25.167969 25.171875-25.167969h48.195313c13.878906 0 25.167969 11.289063 25.167969 25.167969v120.5c0 8.28125 6.714843 15 15 15h81.710937c30.421875 0 55.167969-24.746094 55.167969-55.164062v-153.695313h7.71875c12.585937 0 24.421875-4.902344 33.332031-13.8125 18.359375-18.367187 18.367187-48.253906.027344-66.632813zm-21.242188 45.421876c-3.238281 3.238281-7.542969 5.023437-12.117187 5.023437h-22.71875c-8.285156 0-15 6.714844-15 15v168.695313c0 13.875-11.289063 25.164062-25.167969 25.164062h-66.710937v-105.5c0-30.417969-24.746094-55.167969-55.167969-55.167969h-48.195313c-30.421875 0-55.171875 24.75-55.171875 55.167969v105.5h-66.710937c-13.875 0-25.167969-11.289062-25.167969-25.164062v-168.695313c0-8.285156-6.714844-15-15-15h-22.328125c-.234375-.015625-.464844-.027344-.703125-.03125-4.46875-.078125-8.660156-1.851563-11.800781-4.996094-6.679688-6.679687-6.679688-17.550781 0-24.234375.003906 0 .003906-.003906.007812-.007812l.011719-.011719 208.847656-208.839844c3.234375-3.238281 7.535157-5.019531 12.113281-5.019531 4.574219 0 8.875 1.78125 12.113282 5.019531l208.800781 208.796875c.03125.03125.066406.0625.097656.09375 6.644531 6.691406 6.632813 17.539063-.03125 24.207032zm0 0"/>
+                </svg>
+
+                <span>Durchschnittliche Haushaltsgröße</span>
+            </button>
             <div class="navigation">
-                <button id="scroll-forward-button">Weiter</button>
+                <button id="scroll-forward-button">
+                    <span>Mehr entdecken</span>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
@@ -22,7 +49,14 @@
         <div id="detail-chart-wrapper">
             <div class="detail-heading">
                 <div class="detail-headline">
-                    <button id="scroll-back-button">Zurück</button>
+                    <button id="scroll-back-button">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        <span>Zurück</span>
+                    </button>
                     <h1 class="serif">
                         Verteilung der Einpersonenhaushalte 2019
                     </h1>
@@ -41,7 +75,7 @@
                             <stop offset="0%" class="special-stop"/>
                             <stop offset="55%" class="special-stop"/>
                             <stop offset="56%" class="low-stop"/>
-                            <stop offset="100%" class="low-stop" />
+                            <stop offset="100%" class="low-stop"/>
                         </linearGradient>
                     </defs>
                 </svg>
@@ -54,8 +88,12 @@
             <img height="20px" alt="by" src="https://mirrors.creativecommons.org/presskit/icons/by.svg"/>
         </div>
         <p>Erstellt von Jakob Emmerling</p>
-        <p>Quelle: <a href="https://www.statistik.bayern.de/presse/mitteilungen/2020/pm223/index.html">Pressemitteilung 223/2020/42/A</a></p>
-        <div>Icons erstellt von <a href="https://www.flaticon.com/de/autoren/freepik" title="Freepik">Freepik</a> von <a href="https://www.flaticon.com/de/" title="Flaticon">www.flaticon.com</a></div>
+        <p>Quelle: <a href="https://www.statistik.bayern.de/presse/mitteilungen/2020/pm223/index.html">Pressemitteilung
+            223/2020/42/A</a></p>
+        <div>Icons erstellt von <a href="https://www.flaticon.com/de/autoren/freepik" title="Freepik">Freepik</a> von <a
+                href="https://www.flaticon.com/de/" title="Flaticon">www.flaticon.com</a>
+            und <a href="https://heroicons.com/" title="heroicons">heroicons.com</a></a>
+        </div>
     </div>
 </div>
 <script src="assets/ts/index.ts"></script>

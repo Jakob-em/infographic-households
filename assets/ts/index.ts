@@ -14,11 +14,7 @@ let tooltipDimension = {
 }
 let tooltipPadding = {
   x: 0,
-  y: 25
-}
-let highlightDimension = {
-  width: 500,
-  height: 135
+  y: 30
 }
 
 function offsetDomain(domain, offset) {
@@ -72,7 +68,7 @@ function prepareInitialChart() {
       .enter().append('circle')
       .attr('class', 'history-point')
       .attr('cx', d => x(d.year))
-      .attr('r', 15)
+      .attr('r', 0)
 }
 
 
@@ -109,11 +105,12 @@ function redrawPoints(dataFn: (d: HistoricalPoint) => number) {
 
   }
 
-
+  const radius = d3.scaleLinear().domain([0, d3.extent(historicalData, dataFn)[1]]).range([0, 25]);
   historyChart.selectAll('.history-point')
       .data(historicalData)
       .transition()
       .attr('cy', d => y(dataFn(d)))
+      .attr('r', d => radius(dataFn(d)))
 
   historyChart.selectAll('.history-point')
       .on('mouseover', drawTooltip)
@@ -148,79 +145,96 @@ function redrawPoints(dataFn: (d: HistoricalPoint) => number) {
           .y(d => y(dataFn(d)))
       )
 
-  addHighlight(dataFn);
+  const averageDiff = (i) => (dataFn(historicalData[i + 1]) - dataFn(historicalData[i])) / (historicalData[i + 1].year - historicalData[i].year)
+  const firstDataLabel = singleHousehold ? (averageDiff(0) * 100).toFixed(2) + '%' : averageDiff(0).toFixed(2)
+  const secondDataLabel = singleHousehold ? (averageDiff(1) * 100).toFixed(2) + '%' : averageDiff(1).toFixed(2)
+
+  drawConnectionLabel(0, dataFn, false, 'first-half', 10, 70, 270,
+      'Durchschnittliche Änderung\npro Jahr: ' + firstDataLabel)
+  drawConnectionLabel(1, dataFn, false, 'second-half', 10, 70, 270,
+      'Durchschnittliche Änderung\npro Jahr: ' + secondDataLabel)
+
+  drawConnectionLabel(1, dataFn, true, 'detailed', 50, 135, 400,
+      `Von 1999 bis 2019 stieg die Anzahl der
+Haushalte um 18%. Wobei die Anzahl der
+Singlehaushalte um 41% stieg. Gleichzeitig
+fiel die Anzahl der Haushalte mit 5 oder
+mehr Personen um mehr als 19%.
+`)
 
 }
 
-function addHighlight(dataFn: (d: HistoricalPoint) => number) {
-  const lastPoint = historicalData[historicalData.length - 1]
-  const secondLastPoint = historicalData[historicalData.length - 2]
-  const lineMarkerX = x(secondLastPoint.year) + (x(lastPoint.year) - x(secondLastPoint.year)) / 2;
-  const lineMarkerY = y(dataFn(secondLastPoint)) + (y(dataFn(lastPoint)) - y(dataFn(secondLastPoint))) / 2;
-  const isAboveData = lineMarkerY > historyDimensions.height / 2
-  const highlightTextX = lineMarkerX - 270
-  const highlightTextY = isAboveData ? 50 : historyDimensions.height / 2 + 60
+function drawConnectionLabel(fromPointIndex: number, dataFn, above: boolean, className: string, zoomSize: number, height: number, width: number, text: string) {
+  const fromPoint = historicalData[fromPointIndex]
+  const toPoint = historicalData[fromPointIndex + 1]
+  const lineMarkerX = x(fromPoint.year) + (x(toPoint.year) - x(fromPoint.year)) / 2;
+  const lineMarkerY = y(dataFn(fromPoint)) + (y(dataFn(toPoint)) - y(dataFn(fromPoint))) / 2;
 
-  if (historyChart.select('.history-highlight').empty()) {
+  const upperHalf = (lineMarkerY > historyDimensions.height / 2)
+  const markerAbove = (upperHalf && above) || (!upperHalf && !above)
+
+  const classSelector = '.' + className;
+
+  const labelHeight = height
+  const labelWidth = width
+
+  if (historyChart.select(classSelector).empty()) {
     historyChart.append('circle')
         .classed('history-zoom', true)
-        .classed('history-highlight', true)
+        .classed(className, true)
         .attr('cx', lineMarkerX)
-        .attr('r', 50)
-
-    historyChart.append('rect')
-        .classed('history-highlight-text-background', true)
-        .classed('history-highlight', true)
-        .attr('x', highlightTextX)
-        .attr('width', highlightDimension.width)
-        .attr('height', highlightDimension.height)
-        .each(rounded)
-
-    historyChart.append('text')
-        .classed('history-highlight-text', true)
-        .classed('history-highlight', true)
-        .datum({
-          label:
-`Von 1999 bis 2019 stieg die Anzahl der
-Haushalte um 18%. Wobei die Anzahl der
-Singlehaushalte um 41% stieg.
-Gleichzeitig fiel die Anzahl der Haushalte
-mit 5 oder mehr Personen um mehr als 19%
-`, posX: highlightTextX + 20
-        })
-        .each(addLinesFunction('left', '1.2em'))
+        .attr('r', zoomSize)
 
     historyChart
         .append('path')
-        .classed('history-highlight-line', true)
+        .classed('highlight-line', true)
+        .classed(className, true)
+
+    historyChart.append('rect')
+        .classed('highlight-text-background', true)
+        .classed(className, true)
+        .attr('width', labelWidth)
+        .attr('height', labelHeight)
+        .each(rounded)
+    historyChart.append('text')
+        .classed('highlight-text', true)
+        .classed(className, true)
   }
 
-  historyChart
-      .select('.history-zoom')
+  historyChart.select(classSelector + '.highlight-text')
+      .datum({label: text, posX: lineMarkerX - labelWidth})
+      .each(addLinesFunction('left', '1.2em'))
+
+  historyChart.select(classSelector + '.history-zoom')
       .transition()
       .attr('cy', lineMarkerY)
 
-  historyChart
-      .select('.history-highlight-text-background')
+  const withDirection = (i) => (markerAbove ? -i : i)
+
+  const verticalOffset = withDirection(labelHeight + 20) + (markerAbove ? -labelHeight : 0)
+
+  historyChart.select(classSelector + '.highlight-text-background')
       .transition()
-      .attr('y', highlightTextY)
+      .attr('x', lineMarkerX - labelWidth - 20)
+      .attr('y', lineMarkerY + verticalOffset)
 
   historyChart
-      .select('.history-highlight-text')
+      .select(classSelector + '.highlight-text')
       .transition()
-      .attr('y', highlightTextY + 30)
+      .attr('y', lineMarkerY + verticalOffset + 30)
 
-  const highlightLine = d3.path();
-  highlightLine.moveTo(lineMarkerX, lineMarkerY + (isAboveData ? -50 : 50))
-  highlightLine.lineTo(highlightTextX+highlightDimension.width/2, highlightTextY + (isAboveData ? highlightDimension.height : 0))
+  const line = d3.path();
+  line.moveTo(lineMarkerX, lineMarkerY + (markerAbove ? -zoomSize : zoomSize))
+  line.lineTo(lineMarkerX, lineMarkerY + verticalOffset + labelHeight / 2)
+  line.lineTo(lineMarkerX - 20, lineMarkerY + verticalOffset + labelHeight / 2)
 
   historyChart
-      .select('.history-highlight-line')
+      .select(classSelector + '.highlight-line')
       .transition()
-      .attr('d', highlightLine)
+      .attr('d', line)
+
 
 }
-
 
 let historyChart = d3.select('#history-chart')
     .append('svg')
