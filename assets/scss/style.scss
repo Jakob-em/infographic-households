@@ -188,9 +188,12 @@ button {
   }
 
   &:disabled {
-    opacity: 0;
-    visibility: hidden;
+    border-color: $disabled;
     cursor: not-allowed;
+    &, * {
+      color: $disabled;
+      stroke: $disabled;
+    }
   }
 }
 

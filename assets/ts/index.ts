@@ -154,8 +154,8 @@ function redrawPoints(dataFn: (d: HistoricalPoint) => number) {
   drawConnectionLabel(1, dataFn, false, 'second-half', 10, 70, 270,
       'Durchschnittliche Änderung\npro Jahr: ' + secondDataLabel)
 
-  drawConnectionLabel(1, dataFn, true, 'detailed', 50, 135, 400,
-      `Von 1999 bis 2019 stieg die Anzahl der
+  drawConnectionLabel(1, dataFn, true, 'detailed', 50, 135, 420,
+      `Von 1999 bis 2019 stieg die Gesamtanzahl der
 Haushalte um 18%. Wobei die Anzahl der
 Singlehaushalte um 41% stieg. Gleichzeitig
 fiel die Anzahl der Haushalte mit 5 oder
