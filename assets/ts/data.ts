@@ -27,3 +27,14 @@ export const byCitySize: PercentagePoint[] = [
   {class: 'mid', label: 'Stadt', percentage: 53},
 ]
 
+export interface HistoricalDetail {
+  label: string
+  value: number
+}
+
+export const historicalDetails: HistoricalDetail[] = [
+  {label: 'Gesamt', value: 18},
+  {label: 'Singlehaushalte', value: 41},
+  {label: '5+ Personen', value: -19},
+]
+

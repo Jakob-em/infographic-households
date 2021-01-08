@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import {historicalData, HistoricalPoint} from './data';
+import {historicalData, historicalDetails, HistoricalPoint} from './data';
 import {addLinesFunction} from './utils';
 
 let margins = {top: 10, right: 250, bottom: 85, left: 60};
@@ -154,13 +154,70 @@ function redrawPoints(dataFn: (d: HistoricalPoint) => number) {
   drawConnectionLabel(1, dataFn, false, 'second-half', 10, 70, 270,
       'Durchschnittliche Änderung\npro Jahr: ' + secondDataLabel)
 
-  drawConnectionLabel(1, dataFn, true, 'detailed', 50, 135, 420,
-      `Von 1999 bis 2019 stieg die Gesamtanzahl der
-Haushalte um 18%. Wobei die Anzahl der
-Singlehaushalte um 41% stieg. Gleichzeitig
-fiel die Anzahl der Haushalte mit 5 oder
-mehr Personen um mehr als 19%.
-`)
+  const highlightChartWidth = 400;
+  const highlightChartHeight = 220;
+
+  const detailArea = drawConnectionLabel(1, dataFn, true, 'detailed', 50, highlightChartHeight, highlightChartWidth, undefined)
+  addHighlightChart(detailArea, highlightChartWidth, highlightChartHeight);
+}
+
+function addHighlightChart(area, width, height) {
+  const x = d3.scaleLinear()
+      .range([-width / 2, width / 2])
+      .domain([-45, +45]);
+  const marginTop=60
+  const marginBottom=10
+  const y = d3.scaleBand()
+      .range([0, height - marginTop- marginBottom])
+      .domain(historicalDetails.map(function (d) {
+        return d.label;
+      }))
+      .padding(.1);
+
+  const chartCenter =  ((width/2) );
+
+  const chart = area.append('g')
+      .attr('transform', 'translate(0,'+ (marginTop)+')');
+  chart.append('g')
+      .classed('highlight-chart-label', true)
+      .attr('transform', 'translate(' +chartCenter + ',0)')
+      .call(d3.axisLeft(y).tickSize(0))
+      .selectAll('.tick text')
+      .data(historicalDetails)
+      .attr('text-anchor', d => d.value < 0 ? 'start' : 'end')
+      .attr('transform', d => 'translate(' + (d.value < 0 ? 15 : -8) + ',0)')
+
+  chart
+      .selectAll('bars')
+      .data(historicalDetails)
+      .enter()
+      .append('rect')
+      .classed('highlight-chart-bar', true)
+      .attr('transform', 'translate(' + chartCenter + ',0)')
+      .attr('x', d => d.value < 0 ? x(d.value) : 0)
+      .attr('y', d => y(d.label))
+      .attr('width', d => Math.abs(x(d.value)))
+      .attr('height', y.bandwidth())
+
+
+  chart
+      .selectAll('.value-text')
+      .data(historicalDetails)
+      .enter()
+      .append('text')
+      .classed('value-text', true)
+      .attr('x', d => chartCenter + (d.value < 0 ? -20 : 20))
+      .attr('y', d => y(d.label)+y.bandwidth()/2)
+      .attr("dy", "+.32em")
+      .attr('text-anchor', d => d.value < 0 ? 'end' : 'start')
+      .text(d => (d.value>0?"+ ":"- ") + Math.abs(d.value) + '%')
+
+  chart.append('text')
+      .classed('highlight-chart-headline', true)
+      .attr('x', chartCenter)
+      .attr('y', "-1em")
+      .attr('text-anchor', 'middle')
+      .text('Veränderung der Haushalte 1999-2019')
 
 }
 
@@ -190,38 +247,42 @@ function drawConnectionLabel(fromPointIndex: number, dataFn, above: boolean, cla
         .classed('highlight-line', true)
         .classed(className, true)
 
-    historyChart.append('rect')
+    historyChart.append('g')
+        .classed('highlight-wrapper', true)
+        .classed(className, true)
+        .append('rect')
         .classed('highlight-text-background', true)
         .classed(className, true)
         .attr('width', labelWidth)
         .attr('height', labelHeight)
         .each(rounded)
-    historyChart.append('text')
-        .classed('highlight-text', true)
-        .classed(className, true)
+    if (text) {
+      historyChart.append('text')
+          .classed('highlight-text', true)
+          .classed(className, true)
+    }
   }
 
-  historyChart.select(classSelector + '.highlight-text')
-      .datum({label: text, posX: lineMarkerX - labelWidth})
-      .each(addLinesFunction('left', '1.2em'))
+  const highlightWrapper = historyChart.select(classSelector + '.highlight-wrapper')
+
+  const withDirection = (i) => (markerAbove ? -i : i)
+  const verticalOffset = withDirection(100) + (markerAbove ? -labelHeight : 0)
+  if (text) {
+    historyChart.select(classSelector + '.highlight-text')
+        .datum({label: text, posX: lineMarkerX - labelWidth})
+        .each(addLinesFunction('left', '1.2em'))
+        .transition()
+        .attr('y', lineMarkerY + verticalOffset + 30)
+  }
 
   historyChart.select(classSelector + '.history-zoom')
       .transition()
       .attr('cy', lineMarkerY)
 
-  const withDirection = (i) => (markerAbove ? -i : i)
-
-  const verticalOffset = withDirection(labelHeight + 20) + (markerAbove ? -labelHeight : 0)
-
-  historyChart.select(classSelector + '.highlight-text-background')
+  highlightWrapper
       .transition()
-      .attr('x', lineMarkerX - labelWidth - 20)
-      .attr('y', lineMarkerY + verticalOffset)
-
-  historyChart
-      .select(classSelector + '.highlight-text')
-      .transition()
-      .attr('y', lineMarkerY + verticalOffset + 30)
+      .attr('transform',
+          'translate(' + (lineMarkerX - labelWidth - 20) + ',' + (lineMarkerY + verticalOffset) + ')')
 
   const line = d3.path();
   line.moveTo(lineMarkerX, lineMarkerY + (markerAbove ? -zoomSize : zoomSize))
@@ -233,7 +294,7 @@ function drawConnectionLabel(fromPointIndex: number, dataFn, above: boolean, cla
       .transition()
       .attr('d', line)
 
-
+  return highlightWrapper
 }
 
 let historyChart = d3.select('#history-chart')

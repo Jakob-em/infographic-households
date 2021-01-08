@@ -48,14 +48,16 @@ body, html {
 }
 
 .sub-headline {
+  line-height: 1.2em;
   margin-top: .5em;
+  margin-bottom: 1em;
 }
 
 .wrapper {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 3em $vertical-padding 0 $vertical-padding;
+  padding: 2em $vertical-padding 0 $vertical-padding;
 }
 $heading-margin-x: 50px;
 
@@ -202,8 +204,6 @@ button {
   align-items: center;
 }
 
-//History Chart
-
 #history-chart {
   margin-top: 1em;
   position: relative;
@@ -238,6 +238,34 @@ button {
     stroke-dasharray: 5;
     stroke: $primary;
   }
+
+  .highlight-chart-bar {
+    stroke: $text-light;
+    stroke-dasharray: 5;
+    fill: none;
+  }
+  .value-text {
+    fill: $text-light;
+  }
+
+  .highlight-chart-headline {
+    font-size: 1.2em;
+    fill: $text-light;
+    font-weight: bold;
+  }
+
+
+  .highlight-chart-label {
+    font-size: 1.1em;
+
+    path {
+      stroke: $text-light;
+    }
+    text {
+      fill: $text-light;
+      stroke: none;
+    }
+  }
   .highlight-text-background {
     fill: $primary;
     border-radius: 10px;
@@ -250,6 +278,7 @@ button {
   .highlight-text {
     fill: $text-light;
     font-size: 18px;
+    white-space: pre;
   }
 
   .highlight-line {

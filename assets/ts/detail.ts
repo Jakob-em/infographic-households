@@ -168,7 +168,7 @@ nur einer Person.
 Im Vergleich dazu waren in Gemeinden
 mit <tspan class="low bold">weniger als 5 000 Einwohnern</tspan>
 Singlehaushalte mit einem Anteil von
-rund <tspan class="low bold">34 Prozent</tspan> weit weniger häufig vertreten
+rund <tspan class="low bold">34 Prozent</tspan> weit weniger häufig vertreten.
  
 Ebenso dramatisch ist der Unterschied bei den
 durchschnittlichen Haushaltsgrößen von <tspan class="low bold">2.21</tspan>
