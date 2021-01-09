@@ -154,8 +154,8 @@ function redrawPoints(dataFn: (d: HistoricalPoint) => number) {
   drawConnectionLabel(1, dataFn, false, 'second-half', 10, 70, 270,
       'Durchschnittliche Änderung\npro Jahr: ' + secondDataLabel)
 
-  const highlightChartWidth = 400;
-  const highlightChartHeight = 220;
+  const highlightChartWidth = 450;
+  const highlightChartHeight = 230;
 
   const detailArea = drawConnectionLabel(1, dataFn, true, 'detailed', 50, highlightChartHeight, highlightChartWidth, undefined)
   addHighlightChart(detailArea, highlightChartWidth, highlightChartHeight);
@@ -166,7 +166,7 @@ function addHighlightChart(area, width, height) {
       .range([-width / 2, width / 2])
       .domain([-45, +45]);
   const marginTop=60
-  const marginBottom=10
+  const marginBottom=20
   const y = d3.scaleBand()
       .range([0, height - marginTop- marginBottom])
       .domain(historicalDetails.map(function (d) {

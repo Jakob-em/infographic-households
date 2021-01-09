@@ -88,11 +88,12 @@ function showByAge() {
   fadeInDelayed(specialText)
 
   addInfoText(0, (perColumn) * spacingVertical + 50,
-      `2019 waren knapp <tspan class="low bold">27 Prozent</tspan> der Alleinlebenden den <tspan class="low bold">unter 35 jährigen</tspan> 
-zuzuschreiben, während <tspan class="high bold">40 Prozent</tspan> bereits das <tspan class="high bold">60. Lebensjahr vollendet</tspan> hatten.
+      `2019 waren knapp <tspan class="low bold">27 Prozent</tspan> der Alleinlebenden <tspan class="low bold">unter 35</tspan> Jahre alt,
+während <tspan class="high bold">40 Prozent</tspan> bereits das <tspan class="high bold">60. Lebensjahr vollendet</tspan> hatten.
  
-Die größte Gruppe unter den Singlehaushalten bilden dabei die
-<tspan class="special bold">25- bis unter 30-jährigen</tspan>, ihr Anteil beträgt <tspan class="special bold">rund ein Zehntel</tspan>.
+Das vor allem junge Menschen in Bayern häufig allein leben, erkennt man daran,
+dass die Gruppe der <tspan class="special bold">25- bis 30-Jährigen</tspan> mit <tspan class="special bold">ca. 10%</tspan> den größten Anteil
+unter den Einpersonenhaushalten ausmachte.
       `)
 }
 
@@ -121,7 +122,7 @@ function horizontalPositionAndScale(d, i) {
 }
 
 function barPositionAndScale(d) {
-  return `translate(${(d.indexInGroup % perColumn) * spacingHorizontal + d.index * spacingHorizontal * (perColumn + 1)}, ${150 - Math.floor(d.indexInGroup / perColumn) * spacingVertical}) scale(0.04, 0.042)`
+  return `translate(${(d.indexInGroup % perColumn) * spacingHorizontal + d.index * spacingHorizontal * (perColumn + 1)}, ${140 - Math.floor(d.indexInGroup / perColumn) * spacingVertical}) scale(0.04, 0.042)`
 }
 
 function showByPopulation() {
@@ -151,29 +152,26 @@ function showByPopulation() {
       .transition()
       .attr('class', d => d.class + ' label')
       .attr('x', (d) => d.posX)
-      .attr('y', 175)
+      .attr('y', 165)
       .each(addLinesFunction('middle'))
 
   detailChart.selectAll('.label')
       .data(buildLabels(byCitySize, 'vertical')).exit().remove()
 
   addInfoText(160, 10,
-      `In den bayerischen Großstädten mit
-<tspan class="mid bold">mehr als 100 000 Einwohnern</tspan> fiel der
-Anteil der Einpersonenhaushalte
-besonders hoch aus. Hier bestand mehr
-als jeder zweite Haushalt (<tspan class="mid bold">53 Prozent</tspan>) aus
+      `Vor allem in den bayrischen Großstädten mit
+<tspan class="mid bold">mehr als 100.000 Einwohnern</tspan> lebt man häufig allein.
+Hier bestehen <tspan class="mid bold">53 Prozent</tspan> der Haushalte aus
 nur einer Person.
  
-Im Vergleich dazu waren in Gemeinden
-mit <tspan class="low bold">weniger als 5 000 Einwohnern</tspan>
-Singlehaushalte mit einem Anteil von
-rund <tspan class="low bold">34 Prozent</tspan> weit weniger häufig vertreten.
+In kleineren Gemeinden mit <tspan class="low bold">weniger als 5 000 Einwohnern</tspan>
+hingegen machten die Einpersonenhaushalte nur
+<tspan class="low bold">34 Prozent</tspan> aus.
  
-Ebenso dramatisch ist der Unterschied bei den
-durchschnittlichen Haushaltsgrößen von <tspan class="low bold">2.21</tspan>
-auf dem <tspan class="low bold">Land</tspan> zu <tspan class="mid bold">1.8</tspan> Personen pro Haushalt
-in den <tspan class="mid bold">Großstädten</tspan>.
+Ebenso deutlich ist der Unterschied bei den
+durchschnittlichen Haushaltsgrößen von <tspan class="low bold">2.21</tspan> in
+<tspan class="low bold">kleineren Gemeinden</tspan> zu <tspan class="mid bold">1.8</tspan> Personen pro
+Haushalt in den <tspan class="mid bold">Großstädten</tspan>.
 `)
 }
 

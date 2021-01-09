@@ -23,8 +23,8 @@ export const byAge: PercentagePoint[] = [
 ]
 
 export const byCitySize: PercentagePoint[] = [
-  {class: 'low', label: 'Land', percentage: 34},
-  {class: 'mid', label: 'Stadt', percentage: 53},
+  {class: 'low', label: 'kleinere\nGemeinden', percentage: 34},
+  {class: 'mid', label: 'Großstädte', percentage: 53},
 ]
 
 export interface HistoricalDetail {
@@ -34,7 +34,7 @@ export interface HistoricalDetail {
 
 export const historicalDetails: HistoricalDetail[] = [
   {label: 'Gesamt', value: 18},
-  {label: 'Singlehaushalte', value: 41},
-  {label: '5+ Personen', value: -19},
+  {label: 'Einpersonenhaushalte', value: 41},
+  {label: '5+ Personenhaushalte', value: -19},
 ]
 

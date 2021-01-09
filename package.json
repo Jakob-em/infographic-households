@@ -1,7 +1,7 @@
 {
   "name": "infografik",
   "version": "1.0.0",
-  "main": "assets/ts/index.ts",
+  "main": "assets/ts/history.ts",
   "author": "Jakob-em <26389546+Jakob-em@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
