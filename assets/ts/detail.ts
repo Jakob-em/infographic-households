@@ -5,7 +5,7 @@ import {addLinesFunction} from './utils';
 
 let margins = {top: 0, right: 10, bottom: 0, left: 0};
 let detailDimensions = {
-  width: 350 - margins.left - margins.right,
+  width: 355 - margins.left - margins.right,
   height: 180 - margins.top - margins.bottom
 }
 
@@ -122,7 +122,7 @@ function horizontalPositionAndScale(d, i) {
 }
 
 function barPositionAndScale(d) {
-  return `translate(${(d.indexInGroup % perColumn) * spacingHorizontal + d.index * spacingHorizontal * (perColumn + 1)}, ${140 - Math.floor(d.indexInGroup / perColumn) * spacingVertical}) scale(0.04, 0.042)`
+  return `translate(${(d.indexInGroup % perColumn) * spacingHorizontal + d.index * spacingHorizontal * (perColumn + 1)}, ${145 - Math.floor(d.indexInGroup / perColumn) * spacingVertical}) scale(0.04, 0.042)`
 }
 
 function showByPopulation() {
@@ -152,7 +152,7 @@ function showByPopulation() {
       .transition()
       .attr('class', d => d.class + ' label')
       .attr('x', (d) => d.posX)
-      .attr('y', 165)
+      .attr('y', 170)
       .each(addLinesFunction('middle'))
 
   detailChart.selectAll('.label')
@@ -164,9 +164,9 @@ function showByPopulation() {
 Hier bestehen <tspan class="mid bold">53 Prozent</tspan> der Haushalte aus
 nur einer Person.
  
-In kleineren Gemeinden mit <tspan class="low bold">weniger als 5 000 Einwohnern</tspan>
-hingegen machten die Einpersonenhaushalte nur
-<tspan class="low bold">34 Prozent</tspan> aus.
+In kleineren Gemeinden mit <tspan class="low bold">weniger als 5 000</tspan>
+<tspan class="low bold">Einwohnern</tspan> hingegen machten die
+Einpersonenhaushalte nur <tspan class="low bold">34 Prozent</tspan> aus.
  
 Ebenso deutlich ist der Unterschied bei den
 durchschnittlichen Haushaltsgrößen von <tspan class="low bold">2.21</tspan> in
