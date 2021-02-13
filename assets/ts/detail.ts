@@ -88,12 +88,11 @@ function showByAge() {
   fadeInDelayed(specialText)
 
   addInfoText(0, (perColumn) * spacingVertical + 50,
-      `2019 waren knapp <tspan class="low bold">27 Prozent</tspan> der Alleinlebenden <tspan class="low bold">unter 35</tspan> Jahre alt,
-während <tspan class="high bold">40 Prozent</tspan> bereits das <tspan class="high bold">60. Lebensjahr vollendet</tspan> hatten.
+      `2019 waren knapp <tspan class="low bold">27 Prozent</tspan> der Alleinlebenden <tspan class="low bold">unter 35</tspan> Jahre alt
+und <tspan class="high bold">40 Prozent</tspan> hatten das <tspan class="high bold">60. Lebensjahr vollendet</tspan>.
  
-Das vor allem junge Menschen in Bayern häufig allein leben, erkennt man daran,
-dass die Gruppe der <tspan class="special bold">25- bis 30-Jährigen</tspan> mit <tspan class="special bold">ca. 10%</tspan> den größten Anteil
-unter den Einpersonenhaushalten ausmachte.
+Die Gruppe der <tspan class="special bold">25- bis 30-Jährigen</tspan> machte mit <tspan class="special bold">ca. 10%</tspan> den größten Anteil
+unter den Einpersonenhaushalten aus.
       `)
 }
 
